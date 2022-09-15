@@ -31,11 +31,11 @@ requirements:
 test:
   requires:
     - pip
-    - numba
-    - numpy <1.22
+    - numba         # [not s390x]
+    - numpy <1.22   # [not s390x]
   imports:
     - PyNomaly
-    - PyNomaly.loop
+    - PyNomaly.loop # [not s390x]
   commands:
     - pip check
 
