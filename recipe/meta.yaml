@@ -1,6 +1,5 @@
 {% set name = "pynomaly" %}
 {% set version = "0.3.3" %}
-{% set sha256 = "8bf89d904eccccde581fc27d90295bb4a7e9de6cc3a2dd726fdd79df8678e0bd" %}
 
 package:
   name: {{ name|lower }}
@@ -8,12 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyNomaly-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: 8bf89d904eccccde581fc27d90295bb4a7e9de6cc3a2dd726fdd79df8678e0bd
 
 build:
-  # noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  number: 1
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
 
 requirements:
   host:
@@ -23,19 +21,19 @@ requirements:
     - wheel
   run:
     - python
-    - python-utils >=2.3.0
     - numpy
+    - python-utils >=2.3.0
   run_constrained:
     - numba >=0.45.1
 
 test:
-  requires:
-    - pip
-    - numba         # [not s390x]
-    - numpy <1.22   # [not s390x]
   imports:
     - PyNomaly
     - PyNomaly.loop # [not s390x]
+  requires:
+    - pip
+    - numba         # [not s390x]
+    - numpy         # [not s390x]
   commands:
     - pip check
 
@@ -51,7 +49,6 @@ about:
   license_family: Apache
   license_file: LICENSE.txt
   doc_url: https://github.com/vc1492a/PyNomaly/blob/main/readme.md
-  doc_source_url: https://github.com/vc1492a/PyNomaly/blob/main/readme.md
   dev_url: https://github.com/vc1492a/PyNomaly
 
 extra:
